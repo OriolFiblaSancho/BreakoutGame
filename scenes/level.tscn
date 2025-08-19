@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://btgvveg4wjylg"]
+
+[ext_resource type="PackedScene" uid="uid://wpjwdfkalcty" path="res://scenes/base.tscn" id="1_2q6dc"]
+[ext_resource type="Script" uid="uid://4455yi65oldn" path="res://scripts/level.gd" id="1_w8frs"]
+[ext_resource type="PackedScene" uid="uid://dkde0vo1u04jm" path="res://scenes/projectile.tscn" id="2_w7c3h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
+size = Vector2(10, 720)
+
+[node name="level" type="Node2D"]
+script = ExtResource("1_w8frs")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(212, 325)
+
+[node name="base" parent="." instance=ExtResource("1_2q6dc")]
+position = Vector2(69, 562)
+
+[node name="projectile" parent="." instance=ExtResource("2_w7c3h")]
+position = Vector2(77, 533)
+
+[node name="walls" type="StaticBody2D" parent="."]
+
+[node name="left_wall" type="CollisionShape2D" parent="walls"]
+position = Vector2(-7, 360)
+shape = SubResource("RectangleShape2D_w7c3h")
+
+[node name="right_wall" type="CollisionShape2D" parent="walls"]
+position = Vector2(431, 355)
+shape = SubResource("RectangleShape2D_w7c3h")
+
+[node name="ceiling" type="CollisionShape2D" parent="walls"]
+position = Vector2(284, -4)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_w7c3h")
+
+[node name="floor" type="CollisionShape2D" parent="walls"]
+position = Vector2(280, 655)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_w7c3h")
