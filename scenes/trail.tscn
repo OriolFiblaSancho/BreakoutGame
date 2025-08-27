@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b87mawdaeanox"]
+
+[ext_resource type="Script" uid="uid://d2kd057bvyjhk" path="res://scripts/trail.gd" id="1_rsj4o"]
+
+[node name="Trail" type="Line2D"]
+points = PackedVector2Array(0, 0)
+script = ExtResource("1_rsj4o")
+MAX_LENGTH = 20

@@ -5,16 +5,14 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_baglu"]
 radius = 7.0
-height = 110.0
+height = 62.0
 
 [node name="base" type="CharacterBody2D"]
 position = Vector2(0, 1)
-motion_mode = 1
 script = ExtResource("1_baglu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1.90735e-06, 7)
-scale = Vector2(1.75, 1)
+position = Vector2(0, 7)
 texture = ExtResource("2_t45w4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

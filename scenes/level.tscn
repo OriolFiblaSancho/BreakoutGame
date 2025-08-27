@@ -1,40 +1,64 @@
-[gd_scene load_steps=5 format=3 uid="uid://btgvveg4wjylg"]
+[gd_scene load_steps=9 format=3 uid="uid://btgvveg4wjylg"]
 
 [ext_resource type="PackedScene" uid="uid://wpjwdfkalcty" path="res://scenes/base.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://4455yi65oldn" path="res://scripts/level.gd" id="1_w8frs"]
+[ext_resource type="Script" uid="uid://dl42brnvhsh73" path="res://scripts/camera_2d.gd" id="2_mx8sn"]
+[ext_resource type="AudioStream" uid="uid://cf3ypycy0ycjd" path="res://assets/sound/juicy_breakout-theme.mp3" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://dkde0vo1u04jm" path="res://scenes/projectile.tscn" id="2_w7c3h"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ppgk2"]
+radius = 6.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
-size = Vector2(10, 720)
+size = Vector2(42.5006, 2001)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8frs"]
+size = Vector2(2287, 20)
 
 [node name="level" type="Node2D"]
+position = Vector2(-2, 0)
 script = ExtResource("1_w8frs")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(212, 325)
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ppgk2")
+volume_db = -8.0
+autoplay = true
 
-[node name="base" parent="." instance=ExtResource("1_2q6dc")]
-position = Vector2(69, 562)
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(482, 270)
+script = ExtResource("2_mx8sn")
+
+[node name="base" parent="." groups=["ballParticlesHit"] instance=ExtResource("1_2q6dc")]
+position = Vector2(174, 456)
 
 [node name="projectile" parent="." instance=ExtResource("2_w7c3h")]
-position = Vector2(77, 533)
+position = Vector2(365, 356)
 
-[node name="walls" type="StaticBody2D" parent="."]
+[node name="cameraShake" type="Area2D" parent="projectile"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="projectile/cameraShake"]
+shape = SubResource("CircleShape2D_ppgk2")
+
+[node name="walls" type="StaticBody2D" parent="." groups=["Walls", "ballParticlesHit"]]
 
 [node name="left_wall" type="CollisionShape2D" parent="walls"]
-position = Vector2(-7, 360)
+position = Vector2(-21, 541)
 shape = SubResource("RectangleShape2D_w7c3h")
 
 [node name="right_wall" type="CollisionShape2D" parent="walls"]
-position = Vector2(431, 355)
+position = Vector2(985, 349)
 shape = SubResource("RectangleShape2D_w7c3h")
 
 [node name="ceiling" type="CollisionShape2D" parent="walls"]
-position = Vector2(284, -4)
+position = Vector2(540, -23)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_w7c3h")
 
-[node name="floor" type="CollisionShape2D" parent="walls"]
-position = Vector2(280, 655)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_w7c3h")
+[node name="deathZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deathZone"]
+position = Vector2(487, 555)
+shape = SubResource("RectangleShape2D_w8frs")
+
+[connection signal="body_entered" from="projectile/cameraShake" to="Camera2D" method="_on_camera_shake_body_entered"]
+[connection signal="body_entered" from="deathZone" to="projectile" method="_on_death_zone_body_entered"]
