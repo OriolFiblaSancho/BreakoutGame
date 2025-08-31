@@ -16,7 +16,8 @@ func _ready() -> void:
 func setupLevel():
 	
 	var colors = getColors()
-	
+	if $AudioStreamPlayer2D.playing != true:
+		$AudioStreamPlayer2D.playing = true
 	
 	for r in rows:
 		for c in col:

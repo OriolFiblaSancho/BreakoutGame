@@ -12,17 +12,38 @@ var spawn_safe_time := 0.12 # segundos de gracia
 
 var hitCounter = 0
 
+# --- spawn on base ---
+
+@onready var base = $"../base"
+var ball_offset := Vector2(0, -32) # offset relativo a la base donde se posiciona la bola
+
+var launched := false
+
+
 func _ready() -> void:
-	velocity = Vector2(speed * -1, speed)
+	launched = false
+	is_active = false
 	speed = speed + (10*GameManager.lvl)
 	
-	
 func _physics_process(delta: float) -> void:
-	
+	var shoot = Input.is_action_just_pressed("ui_up")
+
 	alive_time += delta
-	if is_active:
-		var collision = move_and_collide(velocity * delta)
+	if not launched:
+		global_position = base.global_position + ball_offset
+		$Trail.MAX_LENGTH = 0
 		
+		if shoot:
+			
+			$Trail.MAX_LENGTH = 20
+			launched = true
+			is_active = true
+			velocity = Vector2(50,-50) * 5
+		return
+		
+	if is_active:
+		
+		var collision = move_and_collide(velocity * delta)
 		if collision:
 			velocity = velocity.bounce(collision.get_normal())
 			

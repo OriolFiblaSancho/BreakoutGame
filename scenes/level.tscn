@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://btgvveg4wjylg"]
+[gd_scene load_steps=10 format=3 uid="uid://btgvveg4wjylg"]
 
 [ext_resource type="PackedScene" uid="uid://wpjwdfkalcty" path="res://scenes/base.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://4455yi65oldn" path="res://scripts/level.gd" id="1_w8frs"]
 [ext_resource type="Script" uid="uid://dl42brnvhsh73" path="res://scripts/camera_2d.gd" id="2_mx8sn"]
 [ext_resource type="AudioStream" uid="uid://cf3ypycy0ycjd" path="res://assets/sound/juicy_breakout-theme.mp3" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://dkde0vo1u04jm" path="res://scenes/projectile.tscn" id="2_w7c3h"]
+[ext_resource type="PackedScene" uid="uid://djagkt0bos6nm" path="res://scenes/pause_menu.tscn" id="6_2r41h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ppgk2"]
 radius = 6.0
@@ -22,17 +23,16 @@ script = ExtResource("1_w8frs")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_ppgk2")
 volume_db = -8.0
-autoplay = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(482, 270)
 script = ExtResource("2_mx8sn")
 
 [node name="base" parent="." groups=["ballParticlesHit"] instance=ExtResource("1_2q6dc")]
-position = Vector2(174, 456)
+position = Vector2(184, 466)
 
 [node name="projectile" parent="." instance=ExtResource("2_w7c3h")]
-position = Vector2(365, 356)
+position = Vector2(244, 397)
 
 [node name="cameraShake" type="Area2D" parent="projectile"]
 
@@ -59,6 +59,9 @@ shape = SubResource("RectangleShape2D_w7c3h")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="deathZone"]
 position = Vector2(487, 555)
 shape = SubResource("RectangleShape2D_w8frs")
+
+[node name="pauseMenu" parent="." instance=ExtResource("6_2r41h")]
+z_index = 999
 
 [connection signal="body_entered" from="projectile/cameraShake" to="Camera2D" method="_on_camera_shake_body_entered"]
 [connection signal="body_entered" from="deathZone" to="projectile" method="_on_death_zone_body_entered"]
