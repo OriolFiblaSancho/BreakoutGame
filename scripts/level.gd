@@ -12,12 +12,9 @@ var padding_y = 34
 
 func _ready() -> void:
 	setupLevel()
-	$AudioStreamPlayer2D.playing = true
 func setupLevel():
 	
 	var colors = getColors()
-	if $AudioStreamPlayer2D.playing != true:
-		$AudioStreamPlayer2D.playing = true
 	
 	for r in rows:
 		for c in col:

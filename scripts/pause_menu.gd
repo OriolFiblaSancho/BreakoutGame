@@ -3,7 +3,7 @@ extends Control
 func _ready() -> void:
 	$AnimationPlayer.play("RESET")
 	hide()
-	
+	$Music.playing = true
 
 func resume():
 	get_tree().paused = false
@@ -20,13 +20,14 @@ func menu():
 	elif Input.is_action_just_pressed("pause") and get_tree().paused == true:
 		resume()
 
-
-func _on_check_button_pressed() -> void:
-	$click.play()
-
 func _on_button_pressed() -> void:
 	resume()
 
 
 func _process(delta: float) -> void:
 	menu()
+
+
+func _on_check_button_toggled(toggled_on: bool) -> void:
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"), toggled_on)
+	$click.play()
