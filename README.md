@@ -1,5 +1,4 @@
-# Breakout — SuperPong
-
+# Super Breakout 
 A tiny, colorful Breakout-style game made with Godot. Fast-paced bricks, tasty particle effects, camera shake and satisfying combo sounds — launch the ball and clear the screen.
 
 Demo
